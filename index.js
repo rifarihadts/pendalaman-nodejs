@@ -1,3 +1,6 @@
+const dotenv = require('dotenv')
+dotenv.config()
+
 const bodyParser = require('body-parser')
 const express = require('express')
 const hbs = require('hbs')
@@ -89,6 +92,7 @@ app.use((err, req,res,next) => {
     res.send(err.message)
 })
 
-app.listen(3000, () => {
-    console.log('App listen on port 3000')
+//use port environment variable 
+app.listen(process.env.PORT, () => {
+    console.log(`App listen on port ${process.env.PORT}`)
 })
