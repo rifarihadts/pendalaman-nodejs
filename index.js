@@ -4,6 +4,8 @@ const hbs = require('hbs')
 const morgan = require('morgan')
 const path = require('path')
 const database = require('./database')
+const fileUpload = require('express-fileupload')
+const fs = require('fs')
 
 
 // import express from 'express'
@@ -23,6 +25,9 @@ app.set('views', __dirname+'/layouts')
 app.set('view engine', 'html')
 app.engine('html', hbs.__express)
 
+//use file parser
+app.use(fileUpload())
+
 app.use(morgan('combined'))
 
 //parse request body
@@ -30,7 +35,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 //server static file
 app.use('/assets', express.static(__dirname + '/assets'))
-
+app.use('/files', express.static(__dirname + '/files'))
 app.get('/', (req, res, next) => {
     res.send({success:true})
 })
@@ -64,8 +69,20 @@ app.get('/add-product', (req, res, next) => {
 // handle form POST METHOD
 app.post('/add-product', (req, res, next) => {
     console.log('Request', req.body)
-    database.insertProduct(db, req.body.name, parseInt(req.body.price), '-')
-    res.send(req.body)
+    console.log('file', req.files)
+
+    //get file name
+    const fileName = Date.now() + req.files.photo.name
+
+    //write file
+    fs.writeFile(path.join(__dirname, '/files/', fileName), req.files.photo.data, (err) => {
+        if(err) {
+            console.error(err)
+            return
+        }
+    }) 
+    database.insertProduct(db, req.body.name, parseInt(req.body.price), `/files/${fileName}`)
+    res.redirect('/product')
 })
 
 app.use((err, req,res,next) => {

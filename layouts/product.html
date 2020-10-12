@@ -14,7 +14,7 @@
       <div class="card" style="width: 18rem; margin-top: 42px;">
         <div class="card-body">
           <h5 class="card-title">Add Product</h5>
-          <form method="GET" action="/add-product" enctype="multipart/form-data">
+          <form method="POST" action="/add-product" enctype="multipart/form-data">
             <div class="form-group">
               <label for="productName">Name</label>
               <input type="text" class="form-control" id="productName" aria-describedby="productHelp" name="name">
@@ -25,8 +25,8 @@
               <input type="number" class="form-control" id="productPrice" name="price">
             </div>
             <div class="form-group">
-              <label for="productPrice">Photo</label>
-              <input type="file" class="form-control" id="productPhoto" name="photo">
+              <label for="productPicture">Picture</label>
+              <input type="file" class="form-control" id="productPicture" name="photo">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>

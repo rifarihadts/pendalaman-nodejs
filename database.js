@@ -65,7 +65,7 @@ exports.insertProduct = function(db, name, price, photo) {
 
  exports.getProduct = function(db) {
     return new Promise((resolve, reject) => {
-        db.all('SELECT * FROM product', (err, result) => {
+        db.all('SELECT * FROM product order by id desc', (err, result) => {
             if (err) {
                 reject(err)
             }
