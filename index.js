@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser')
 const express = require('express')
 const hbs = require('hbs')
 const morgan = require('morgan')
@@ -20,6 +21,9 @@ app.engine('html', hbs.__express)
 
 app.use(morgan('combined'))
 
+//parse request body
+app.use(bodyParser.urlencoded())
+
 //server static file
 app.use('/assets', express.static(__dirname + '/assets'))
 
@@ -33,10 +37,14 @@ app.get('/product', (req, res, next) => {
 
 //handle form GET METHOD
 app.get('/add-product', (req, res, next) => {
-    res.send(req.query)
+    res.send(req.body)
 })
 
-
+// handle form POST METHOD
+app.post('/add-product', (req, res, next) => {
+    console.log('Request', req.body)
+    res.send(req.body)
+})
 
 app.use((err, req,res,next) => {
     res.send(err.message)
