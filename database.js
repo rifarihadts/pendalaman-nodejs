@@ -3,7 +3,7 @@
 const sqlite = require('sqlite3')
 
 // export.initDatabase
-export function initDatabase() {
+exports.initDatabase = function () {
     return  new sqlite.Database('data', (err) => {
         if(err){
             throw err
@@ -16,7 +16,7 @@ export function initDatabase() {
  * 
  * @param {sqlite.Database} db 
  */
-export function initTable(db){
+exports.initTable = function (db){
     db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS product  (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,7 +34,7 @@ export function initTable(db){
  * @param {number} price 
  * @param {string} photo 
  */
-export function insertProduct(db, name, price, photo) {
+exports.insertProduct = function(db, name, price, photo) {
     db.run('INSERT INTO product (photo,name,price) VALUES ($photo,$name,$price)', {
         $photo: photo,
         $name: name,
@@ -52,7 +52,7 @@ export function insertProduct(db, name, price, photo) {
  * 
  * @param {sqlite.Database} db 
  */
-export function getProduuct(db) {
+exports.getProduuct = function(db) {
     db.all('Select * from product', (err, result) => {
         if(err) {
             console.log(err)
