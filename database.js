@@ -52,31 +52,31 @@ exports.insertProduct = function(db, name, price, photo) {
  * 
  * @param {sqlite.Database} db 
  */
-exports.getProduuct = function(db) {
-    db.all('Select * from product', (err, result) => {
-        if(err) {
-            console.log(err)
-            throw err
-        }
-        console.log(result)
-        return result
-    })
-}
-
- // export function getProduct(db) {
-//     return new Promise((resolve, reject) => {
-//         db.all('SELECT * FROM product', (err, result) => {
-//             if (err) {
-//                 reject(err)
-//             }
-
-//             if (result) {
-//                 resolve(result)
-//             } else {
-//                 resolve([])
-//             }
-//         })
+// exports.getProduuct = function(db) {
+//     db.all('Select * from product', (err, result) => {
+//         if(err) {
+//             console.log(err)
+//             throw err
+//         }
+//         console.log('query result : ' + result)
+//         return result
 //     })
 // }
+
+ exports.getProduct = function(db) {
+    return new Promise((resolve, reject) => {
+        db.all('SELECT * FROM product', (err, result) => {
+            if (err) {
+                reject(err)
+            }
+
+            if (result) {
+                resolve(result)
+            } else {
+                resolve([])
+            }
+        })
+    })
+}
 
 
